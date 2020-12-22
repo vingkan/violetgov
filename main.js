@@ -46,14 +46,18 @@ class User extends React.Component {
 class Main extends React.Component {
     constructor(props) {
         super(props);
+        this.props.users = this.props.users || [];
     }
     render() {
         const users = this.props.users;
+        const nUsers = users.length;
+        const pluralUsers = nUsers === 1 ? "user" : "users";
         return (
             <div className="Main">
                 <h1>Welcome to VioletGov!</h1>
                 <p>Helping you build strong constituent relationships.</p>
                 <h2>Your Constituents</h2>
+                <p>Showing {nUsers} {pluralUsers}.</p>
                 <div className="Main__Users">
                     {users.map((user, i) => {
                         return <User key={i} user={user} />;
@@ -64,25 +68,16 @@ class Main extends React.Component {
     }
 }
 
-/*
- * Red is missing LastName
- * Purple is missing Email
- * Yellow is missing ZipCode
- * Green and Blue have non-ASCII characters
- * Blank lines should not produce users
- */
-const usersCSV = `
-Email,FirstName,LastName,ZipCode
-red@colors.us,Red,,60652
-orange@colors.us,Orange,O'Brien,60623
-
-yellow@colors.us,Yellow,Yesenia,
-green@colors.us,Green,González,60616
-blue@colors.us,Blue,Bueños,60607
-,Purple,Postovsky,60622
-`;
-
-const usersJSON = parseUsersCSV(usersCSV);
-
-const mainEl = <Main users={usersJSON} />
+const mainEl = <Main />
 ReactDOM.render(mainEl, document.getElementById("main"));
+
+// Fetch constituent data from file.
+fetch("./constituents.csv").then(async (res) => {
+    const csv = await res.text();
+    const usersJSON = parseUsersCSV(csv);
+    const mainEl = <Main users={usersJSON} />
+    ReactDOM.render(mainEl, document.getElementById("main"));
+}).catch((err) => {
+    console.log("Error fetching users:");
+    console.error(err);
+});
