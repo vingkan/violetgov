@@ -1,11 +1,48 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-body {
-    font-family: 'Roboto', sans-serif;    
+html {
+    font-family: 'Roboto', sans-serif;
+    background: #ededed;
 }
 
 h1, h2, h3 {
     font-family: 'Merriweather', serif;
     font-weight: bold;
+}
+
+.Main {
+    max-width: 640px;
+    margin: 10px auto;
+}
+
+.User {
+    background: white;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+.User:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+.User__Initial, .User__Profile {
+    display: inline-block;
+    vertical-align: top;
+    margin: 10px;
+}
+
+.User__Initial {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 30px;
+    border-radius: 50%;
+    text-align: center;
+    background: #ab24ff;
+    color: white;
+}
+
+.User__Profile h3, .User__Profile p {
+    margin: 0;
 }
