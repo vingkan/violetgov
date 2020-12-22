@@ -6,6 +6,7 @@ class Main extends React.Component {
         return (
             <div>
                 <h1>Welcome to VioletGov!</h1>
+                <p>Helping you build strong constituent relationships.</p>
             </div>
         );
     }
