@@ -20,6 +20,21 @@ function parseUsersCSV(csv) {
     return users;
 }
 
+/*
+ * Returns true if user is a match for query, false otherwise.
+ */
+function filterUserForQuery(query, user) {
+    const userData = [
+        user.FirstName,
+        user.LastName,
+        user.Email,
+        user.ZipCode
+    ];
+    const userDocument = userData.join(" ").toLowerCase();
+    const isMatch = userDocument.indexOf(query) > - 1;
+    return isMatch;
+}
+
 class User extends React.Component {
     constructor(props) {
         super(props);
@@ -47,9 +62,21 @@ class Main extends React.Component {
     constructor(props) {
         super(props);
         this.props.users = this.props.users || [];
+        this.state = {
+            query: "",
+        };
+    }
+    handleSearch(query) {
+        this.setState({ query: query.toLowerCase() });
     }
     render() {
-        const users = this.props.users;
+        // Filter for user search.
+        const query = this.state.query;
+        const isSearch = query.length > 0;
+        const users = isSearch
+            ? this.props.users.filter((u) => filterUserForQuery(query, u))
+            : this.props.users;
+        // Display number of users.
         const nUsers = users.length;
         const pluralUsers = nUsers === 1 ? "user" : "users";
         return (
@@ -57,6 +84,12 @@ class Main extends React.Component {
                 <h1>Welcome to VioletGov!</h1>
                 <p>Helping you build strong constituent relationships.</p>
                 <h2>Your Constituents</h2>
+                <input
+                    className="Main__Search"
+                    type="text"
+                    placeholder="Search for constituents"
+                    onChange={(e) => { this.handleSearch(e.target.value) }}
+                />
                 <p>Showing {nUsers} {pluralUsers}.</p>
                 <div className="Main__Users">
                     {users.map((user, i) => {

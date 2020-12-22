@@ -11,6 +11,10 @@ h1, h2, h3 {
     font-weight: bold;
 }
 
+input {
+    font-family: 'Roboto', sans-serif;
+}
+
 .Main {
     max-width: 640px;
     margin: 10px auto;
@@ -45,4 +49,11 @@ h1, h2, h3 {
 
 .User__Profile h3, .User__Profile p {
     margin: 0;
+}
+
+.Main__Search {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
 }
